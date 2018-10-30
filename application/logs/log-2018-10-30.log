@@ -172,3 +172,29 @@ INFO - 2018-10-30 09:52:52 --> File loaded: G:\xampp\htdocs\safic\application\vi
 INFO - 2018-10-30 09:52:52 --> File loaded: G:\xampp\htdocs\safic\application\views\estudiantes/getestudiante.php
 INFO - 2018-10-30 09:52:52 --> Final output sent to browser
 DEBUG - 2018-10-30 09:52:52 --> Total execution time: 0.0430
+INFO - 2018-10-30 09:53:50 --> Config Class Initialized
+INFO - 2018-10-30 09:53:50 --> Hooks Class Initialized
+DEBUG - 2018-10-30 09:53:50 --> UTF-8 Support Enabled
+INFO - 2018-10-30 09:53:50 --> Utf8 Class Initialized
+INFO - 2018-10-30 09:53:50 --> URI Class Initialized
+INFO - 2018-10-30 09:53:50 --> Router Class Initialized
+INFO - 2018-10-30 09:53:50 --> Output Class Initialized
+INFO - 2018-10-30 09:53:50 --> Security Class Initialized
+DEBUG - 2018-10-30 09:53:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2018-10-30 09:53:50 --> Input Class Initialized
+INFO - 2018-10-30 09:53:50 --> Language Class Initialized
+INFO - 2018-10-30 09:53:50 --> Loader Class Initialized
+INFO - 2018-10-30 09:53:50 --> Database Driver Class Initialized
+ERROR - 2018-10-30 09:53:50 --> Severity: Warning --> ini_set(): A session is active. You cannot change the session module's ini settings at this time G:\xampp\htdocs\safic\system\libraries\Session\Session.php 314
+INFO - 2018-10-30 09:53:50 --> Session: Class initialized using 'files' driver.
+INFO - 2018-10-30 09:53:50 --> Model "MRecurso" initialized
+INFO - 2018-10-30 09:53:50 --> Controller Class Initialized
+INFO - 2018-10-30 09:53:50 --> Helper loaded: url_helper
+DEBUG - 2018-10-30 09:53:50 --> Jasr class already loaded. Second attempt ignored.
+INFO - 2018-10-30 09:53:50 --> Model "MEstudiante" initialized
+INFO - 2018-10-30 09:53:50 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/menu.php
+INFO - 2018-10-30 09:53:50 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/top.php
+INFO - 2018-10-30 09:53:50 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/footer-bar.php
+INFO - 2018-10-30 09:53:50 --> File loaded: G:\xampp\htdocs\safic\application\views\estudiantes/getestudiante.php
+INFO - 2018-10-30 09:53:50 --> Final output sent to browser
+DEBUG - 2018-10-30 09:53:50 --> Total execution time: 0.0505
