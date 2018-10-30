@@ -1,7 +1,7 @@
 <?php
 /**************************************************************************
 * Nombre de la Clase: CFacturacion
-* Version: 1.0.0
+* Version: 1.0
 * Descripcion: Es el controlador para el Modulo de Facturacion
 * en el sistema.
 * Autor: jhonalexander90@gmail.com
