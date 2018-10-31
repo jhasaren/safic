@@ -273,6 +273,12 @@ $(document).ready(function () {
     $('.btn-liqfac').click(function (e) {
         e.preventDefault();
         
+        /*Obtiene fecha actual*/
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        
         //Validacion Fecha Plazo Pago
         $("#single_cal1").attr("disabled", "disabled");
         $("#plazo_pago").change(function () {
@@ -281,7 +287,7 @@ $(document).ready(function () {
                 $("#single_cal1").attr("disabled", "disabled");
                 $("#single_cal1").attr("placeholder", "");
             } else {
-                $("#single_cal1").val("");
+                $("#single_cal1").val(today);
                 $("#single_cal1").removeAttr("disabled");
                 $("#single_cal1").attr("placeholder", "Seleccione la fecha de Pago");
             }
