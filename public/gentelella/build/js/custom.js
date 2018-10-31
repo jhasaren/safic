@@ -295,6 +295,10 @@ $(document).ready(function () {
         $("#idjor_liq").val(idJor);
         $('#myModal-liq').modal('show');
     });
+    /*Deshabilitar tecla enter en formulario*/
+    $('#form_regcxc').on('keypress', function(e) {
+        return e.which !== 13;
+    });
     
     
     

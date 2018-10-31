@@ -334,49 +334,59 @@ class CFacturacion extends CI_Controller {
                 $strdata = explode("|", $estudiante);
                 $idEstudiante = str_replace(" ","",$strdata[0]);
                 
-                $checkEstudiante = $this->MEstudiante->get_estudiante($idEstudiante);
-                                
-                if (($checkEstudiante != FALSE) && ($checkEstudiante->activo == 'S')){
-                                        
-                    /*Consulta Modelo para obtener listado de Tarifas Adicionales*/
-                    $listTarAdc = $this->MFacturacion->list_tarifa_adc();
+                if ($this->jasr->validaTipoString($idEstudiante,5)){
+                
+                    $checkEstudiante = $this->MEstudiante->get_estudiante($idEstudiante);
 
-                    $flag = 0;
-                    foreach ($listTarAdc as $tarifaCobra){
+                    if (($checkEstudiante != FALSE) && ($checkEstudiante->activo == 'S')){
 
-                        $marcaTarifa = $this->input->post($tarifaCobra['idTarifa']);
-                        $cantidadTarifa = $this->input->post("cantidad_".$tarifaCobra['idTarifa']);
+                        /*Consulta Modelo para obtener listado de Tarifas Adicionales*/
+                        $listTarAdc = $this->MFacturacion->list_tarifa_adc();
 
-                        if ($marcaTarifa == 'on'){
+                        $flag = 0;
+                        foreach ($listTarAdc as $tarifaCobra){
 
-                            if ($flag == 0){
-                                $insFactura = $this->MFacturacion->registra_factura($idEstudiante,$checkEstudiante->idCurso,$checkEstudiante->idJornada,1);
-                                $flag = 1;
-                            }
-                            /*Consulta Modelo para registrar detalle de factura*/
-                            $this->MFacturacion->registra_factura_detalle($insFactura,$tarifaCobra['idTarifa'],$tarifaCobra['descTarifa'],$tarifaCobra['valorTipoTarifa'],$cantidadTarifa);
-                            
-                        } 
+                            $marcaTarifa = $this->input->post($tarifaCobra['idTarifa']);
+                            $cantidadTarifa = $this->input->post("cantidad_".$tarifaCobra['idTarifa']);
 
-                    }
-                    
-                    if ($flag == 0){
-                        
-                        $info['message'] = 'No se registro la cuenta por cobrar. Debe seleccionar al menos una tarifa.';
+                            if ($marcaTarifa == 'on'){
+
+                                if ($flag == 0){
+                                    $insFactura = $this->MFacturacion->registra_factura($idEstudiante,$checkEstudiante->idCurso,$checkEstudiante->idJornada,1);
+                                    $flag = 1;
+                                }
+                                /*Consulta Modelo para registrar detalle de factura*/
+                                $this->MFacturacion->registra_factura_detalle($insFactura,$tarifaCobra['idTarifa'],$tarifaCobra['descTarifa'],$tarifaCobra['valorTipoTarifa'],$cantidadTarifa);
+
+                            } 
+
+                        }
+
+                        if ($flag == 0){
+
+                            $info['message'] = 'No se registro la cuenta por cobrar. Debe seleccionar al menos una tarifa.';
+                            $info['alert'] = 2;
+                            $this->module($info);
+
+                        } else {
+
+                            $info['message'] = 'Se registro correctamente la cuenta por cobrar.';
+                            $info['alert'] = 1;
+                            $this->module($info);
+
+                        }
+
+                    } else {
+
+                        $info['message'] = 'No fue posible registrar la cuenta por cobrar. El estudiante no existe o se encuentra inactivo.';
                         $info['alert'] = 2;
                         $this->module($info);
-                        
-                    } else {
-                        
-                        $info['message'] = 'Se registro correctamente la cuenta por cobrar.';
-                        $info['alert'] = 1;
-                        $this->module($info);
-                        
+
                     }
                 
                 } else {
                     
-                    $info['message'] = 'No fue posible registrar la cuenta por cobrar. El estudiante no existe o se encuentra inactivo.';
+                    $info['message'] = 'El Codigo del Estudiante es incorrecto';
                     $info['alert'] = 2;
                     $this->module($info);
                     

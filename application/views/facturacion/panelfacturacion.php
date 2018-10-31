@@ -136,7 +136,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="modal fade" id="myModal-est" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-est" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form role="form" name="form_regcxc" action="<?php echo base_url() . 'index.php/CFacturacion/regcuentacobrar'; ?>" method="post" autocomplete="off">
+                    <form role="form" id="form_regcxc" name="form_regcxc" action="<?php echo base_url() . 'index.php/CFacturacion/regcuentacobrar'; ?>" method="post" autocomplete="off">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">×</button>
                             <h3>Registrar Cuenta x Cobrar</h3> 

@@ -341,7 +341,7 @@ class MEstudiante extends CI_Model {
                                     WHERE
                                     idEstudiante = ".$dataEstudiante['idEstudiante']."");
         
-        /*Verifica si ya existe la relacion entre estudiante y curso/jornada*/
+        /*Verifica si ya existe la relacion entre estudiante y curso/jornada - carrera*/
         $queryValida = $this->db->query("SELECT
                                         e.idEstudiante,
                                         e.idCurso,
