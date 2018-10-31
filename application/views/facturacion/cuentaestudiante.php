@@ -108,10 +108,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="x_title">
                                 <h2>Detalle Factura</h2>
                                 <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                     <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
+                                    </li>-->
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
@@ -254,16 +254,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <td colspan="3" class="xl66" style="height: 15pt; width: 180pt; text-align: center;" width="240" height="20"></td>
                                                 <td class="xl67" style="width: 71pt; text-align: left;" width="94"></td>
                                             </tr>
-                                            <tr style="height: 15pt;">
+<!--                                            <tr style="height: 15pt;">
                                                 <td colspan="3" class="xl66" style="height: 15pt; width: 180pt; text-align: center;" width="240" height="20"></td>
                                                 <td class="xl67" style="width: 71pt; text-align: left;" width="94"></td>
-                                            </tr>
-                                            <tr style="height: 15pt;">
+                                            </tr>-->
+<!--                                            <tr style="height: 15pt;">
                                                 <td colspan="3" class="xl66" style="height: 15pt; width: 180pt; text-align: center;" width="240" height="20"></td>
                                                 <td class="xl67" style="width: 71pt; text-align: left;" width="94"></td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
+                                    <?php echo $data['dataGeneral']['resolucion']->descResolucion." Numeración ".$data['dataGeneral']['resolucion']->rangoInicial." hasta ".$data['dataGeneral']['resolucion']->rangoFinal; ?><br />
                                     Recibo de pago generado por <B>SAFIC SOFTWARE</B> &COPY;
                                     </center>
                                     <!--tabla-->  

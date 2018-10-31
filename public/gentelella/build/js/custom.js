@@ -269,14 +269,24 @@ $(document).ready(function () {
         $("#idestudianteanl").val(idEstudiante);
         $('#myModal-anlrecibo').modal('show');
     });
-    
-    
-    
-    
-    
-    /*Modal - Eliminar Item Venta*/
+    /*Modal - Liquidar Factura*/
     $('.btn-liqfac').click(function (e) {
         e.preventDefault();
+        
+        //Validacion Fecha Plazo Pago
+        $("#single_cal1").attr("disabled", "disabled");
+        $("#plazo_pago").change(function () {
+            if ($(this).val() == 1) {
+                $("#single_cal1").val("");
+                $("#single_cal1").attr("disabled", "disabled");
+                $("#single_cal1").attr("placeholder", "");
+            } else {
+                $("#single_cal1").val("");
+                $("#single_cal1").removeAttr("disabled");
+                $("#single_cal1").attr("placeholder", "Seleccione la fecha de Pago");
+            }
+        }).trigger("change");
+        
         var idEst = $(this).attr('data-rel');
         var idCur = $(this).attr('data-rel2');
         var idJor = $(this).attr('data-rel3');
@@ -285,6 +295,10 @@ $(document).ready(function () {
         $("#idjor_liq").val(idJor);
         $('#myModal-liq').modal('show');
     });
+    
+    
+    
+    
     /*Modal - Agregar Gasto*/
     $('.btn-gasto').click(function (e) {
         e.preventDefault();

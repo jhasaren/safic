@@ -821,61 +821,101 @@ class MFacturacion extends CI_Model {
     
     /**************************************************************************
      * Nombre del Metodo: registra_plazo_pago
-     * Descripcion: permite registrar los plazos de pago para un recibo
+     * Descripcion: permite registrar los plazos de pago para un recibo.
+     * $tipoPlazo:
+     *      1 - Plazos del sistema
+     *      2 - Fecha Fija
      * Autor: jhonalexander90@gmail.com
      * Fecha Creacion: 28/10/2018, Ultima modificacion: 
      **************************************************************************/
-    public function registra_plazo_pago($recibo,$fecha) {
+    public function registra_plazo_pago($recibo,$fecha,$tipoPlazo,$fechaLimite) {
         
-        $fechaTime = strtotime('+1 month', strtotime($fecha));
-        $fechaSugerida = date('Y-m-d',$fechaTime); /*fecha del siguiente mes*/
-
-        $fecha1_time = strtotime('+3 day', strtotime($fechaSugerida));
-        $fechaReg[1] = date('Y-m-d',$fecha1_time); /*plazo1 - hasta el 04*/
-        $valorCobro[1] = -5000;
-
-        $fecha2_time = strtotime('+5 day', strtotime($fechaSugerida));
-        $fechaReg[2] = date('Y-m-d',$fecha2_time); /*plazo2 - hasta el 06*/
-        $valorCobro[2] = 0;
-
-        $fecha3_time = strtotime('+11 day', strtotime($fechaSugerida));
-        $fechaReg[3] = date('Y-m-d',$fecha3_time); /*plazo3 - hasta el 12*/
-        $valorCobro[3] = 5000;
-
-        $fecha4_time = strtotime('+15 day', strtotime($fechaSugerida));
-        $fechaReg[4] = date('Y-m-d',$fecha4_time); /*plazo4 - hasta el 16*/
-        $valorCobro[4] = 10000;
-                
-        $this->db->trans_strict(TRUE);
-        $this->db->trans_start();
-        
-        for($i=1; $i<=4; $i++){
+        if ($tipoPlazo == 1){ /*plazos del sistema*/
             
-            $this->db->query("INSERT INTO plazo_pago (
-                            nroRecibo, 
-                            fechaPlazo, 
-                            secuencia, 
-                            activo,
-                            valorCobro
-                            ) VALUES (
-                            ".$recibo.",
-                            '".$fechaReg[$i]." 23:59:59',
-                            ".$i.",
-                            'S',
-                            '".$valorCobro[$i]."')");
-            
-        }
-        
-        $this->db->trans_complete();
-        $this->db->trans_off();
+            $fechaTime = strtotime('+1 month', strtotime($fecha));
+            $fechaSugerida = date('Y-m-d',$fechaTime); /*fecha del siguiente mes*/
 
-        if ($this->db->trans_status() === FALSE){
-            
-            return false;
+            $fecha1_time = strtotime('+3 day', strtotime($fechaSugerida));
+            $fechaReg[1] = date('Y-m-d',$fecha1_time); /*plazo1 - hasta el 04*/
+            $valorCobro[1] = -5000;
+
+            $fecha2_time = strtotime('+5 day', strtotime($fechaSugerida));
+            $fechaReg[2] = date('Y-m-d',$fecha2_time); /*plazo2 - hasta el 06*/
+            $valorCobro[2] = 0;
+
+            $fecha3_time = strtotime('+11 day', strtotime($fechaSugerida));
+            $fechaReg[3] = date('Y-m-d',$fecha3_time); /*plazo3 - hasta el 12*/
+            $valorCobro[3] = 5000;
+
+            $fecha4_time = strtotime('+15 day', strtotime($fechaSugerida));
+            $fechaReg[4] = date('Y-m-d',$fecha4_time); /*plazo4 - hasta el 16*/
+            $valorCobro[4] = 10000;
+
+            $this->db->trans_strict(TRUE);
+            $this->db->trans_start();
+
+            for($i=1; $i<=4; $i++){
+
+                $this->db->query("INSERT INTO plazo_pago (
+                                nroRecibo, 
+                                fechaPlazo, 
+                                secuencia, 
+                                activo,
+                                valorCobro
+                                ) VALUES (
+                                ".$recibo.",
+                                '".$fechaReg[$i]." 23:59:59',
+                                ".$i.",
+                                'S',
+                                '".$valorCobro[$i]."')");
+
+            }
+
+            $this->db->trans_complete();
+            $this->db->trans_off();
+
+            if ($this->db->trans_status() === FALSE){
+
+                return false;
+
+            } else {
+
+                return true;
+
+            }
             
         } else {
             
-            return true;
+            if ($tipoPlazo == 2){ /*fecha fija*/
+                
+                $this->db->trans_strict(TRUE);
+                $this->db->trans_start();
+                $this->db->query("INSERT INTO plazo_pago (
+                                nroRecibo, 
+                                fechaPlazo, 
+                                secuencia, 
+                                activo,
+                                valorCobro
+                                ) VALUES (
+                                ".$recibo.",
+                                '".$fechaLimite." 23:59:59',
+                                1,
+                                'S',
+                                0)");
+                $this->db->trans_complete();
+                $this->db->trans_off();
+
+                if ($this->db->trans_status() === FALSE){
+
+                    return false;
+
+                } else {
+
+                    return true;
+
+                }
+                
+            }
             
         }
         
@@ -1037,6 +1077,34 @@ class MFacturacion extends CI_Model {
             
         }
         
+    }
+    
+    /**************************************************************************
+     * Nombre del Metodo: informacion_resolucion
+     * Descripcion: Recupera la informacion de la resolucion activa
+     * Autor: jhonalexander90@gmail.com
+     * Fecha Creacion: 30/10/2018, Ultima modificacion: 
+     **************************************************************************/
+    public function informacion_resolucion() {
+                
+        /*Recupera la informacion de la resolucion*/
+        $query = $this->db->query("SELECT
+                                r.descResolucion,
+                                r.rangoInicial,
+                                r.rangoFinal
+                                FROM resolucion_recibo r
+                                WHERE r.activo = 'S'");
+
+        if ($query->num_rows() == 0) {
+
+            return false;
+
+        } else {
+
+            return $query->row();
+
+        }
+
     }
     
 }

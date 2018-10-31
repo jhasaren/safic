@@ -419,6 +419,12 @@ class MEstudiante extends CI_Model {
                                     WHERE
                                     idAcudiente = ".$dataAcudiente['idAcudiente'].""); 
             
+            $query3 = $this->db->query("UPDATE estudiante_acudiente SET
+                                    parentesco = '".$dataAcudiente['parentesco']."'
+                                    WHERE
+                                    idAcudiente = ".$dataAcudiente['idAcudiente']."
+                                    AND idEstudiante = ".$idEstudiante.""); 
+            
         } else {
             
            $query2 = $this->db->query("INSERT INTO

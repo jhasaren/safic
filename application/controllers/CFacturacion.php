@@ -589,6 +589,10 @@ class CFacturacion extends CI_Controller {
                 $dataReciboPlazos = $this->MFacturacion->informacion_recibo_plazos($recibo); 
                 $infoFactura['plazos'] = $dataReciboPlazos;
                 
+                /*Consulta Modelo para obtener informacion de la resolucion*/
+                $dataResolucion = $this->MFacturacion->informacion_resolucion(); 
+                $infoFactura['resolucion'] = $dataResolucion;
+                
                 $info['dataGeneral'] = $infoFactura;
                 $this->session->set_tempdata('vistarecibo', 1, 7);
                 $this->estadocuenta($id_estudiante,$info);
@@ -626,6 +630,7 @@ class CFacturacion extends CI_Controller {
                 $mesFactura = $this->input->post('mes_factura');
                 $anoFactura = $this->input->post('ano_factura');
                 $liqAdicionales = $this->input->post('adicionales');
+                $tipoPlazo = $this->input->post('plazo_pago');
                 
                 /*Consulta Modelo para obtener listado tarifas fijas*/
                 $listTarFijas = $this->MFacturacion->list_tarifa_fija();
@@ -754,15 +759,39 @@ class CFacturacion extends CI_Controller {
                         }
                         
                         /*Fechas de Plazo para Pago*/
-                        $plazos = $this->MFacturacion->registra_plazo_pago($nroRecibo,date('Y-m'));
-                        if ($plazos == FALSE){
+                        if ($tipoPlazo == 1){
                             
-                            /*Fallo!*/
-                            $errorDescribe['250'] = "No fue posible registrar los plazos.";
-                            $this->session->set_tempdata('messageArray', $errorDescribe, 7);
-                            log_message("ERROR", "250: No fue posible registrar los plazos para el recibo ".$nroRecibo." con fecha liquida ".date('Y-m'));
+                            $plazos = $this->MFacturacion->registra_plazo_pago($nroRecibo,date('Y-m'),$tipoPlazo,NULL);
+                            if ($plazos == FALSE){
+
+                                /*Fallo!*/
+                                $errorDescribe['250'] = "No fue posible registrar los plazos.";
+                                $this->session->set_tempdata('messageArray', $errorDescribe, 7);
+                                log_message("ERROR", "250: No fue posible registrar los plazos para el recibo ".$nroRecibo." con fecha liquida ".date('Y-m'));
+
+                            } 
                             
-                        } 
+                        } else {
+                            
+                            if ($tipoPlazo == 2){
+                                
+                                /*captura variable*/
+                                $date1 = new DateTime($this->input->post('fecha_limite')); 
+                                $fechaLimite = $date1->format('Y-m-d'); 
+                                
+                                $plazos = $this->MFacturacion->registra_plazo_pago($nroRecibo,date('Y-m'),$tipoPlazo,$fechaLimite);
+                                if ($plazos == FALSE){
+
+                                    /*Fallo!*/
+                                    $errorDescribe['251'] = "No fue posible registrar fecha fija de pago.";
+                                    $this->session->set_tempdata('messageArray', $errorDescribe, 7);
+                                    log_message("ERROR", "251: No fue posible registrar fecha fija de pago para el recibo ".$nroRecibo." con fecha liquida ".date('Y-m'));
+
+                                } 
+                                
+                            }
+                            
+                        }
                         
                         /*****************************************************************/
                         $this->session->set_tempdata('message', 'Liquidación realizada. Nro Recibo '.$nroRecibo.'', 7);

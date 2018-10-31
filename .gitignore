@@ -3,3 +3,4 @@
 application/logs/*
 application/cache/session/*
 
+*.log

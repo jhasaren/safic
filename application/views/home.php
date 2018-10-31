@@ -134,10 +134,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <div class="x_title">
                                                 <h2>Recordatorios</h2>
                                                 <ul class="nav navbar-right panel_toolbox">
-                                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                    <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                                     </li>
                                                     <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                                    </li>
+                                                    </li>-->
                                                 </ul>
                                                 <div class="clearfix"></div>
                                             </div>

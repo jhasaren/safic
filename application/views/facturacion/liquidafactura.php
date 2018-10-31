@@ -104,10 +104,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="x_title">
                                 <h2>Lista de Estudiantes</h2>
                                 <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                     <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
+                                    </li>-->
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
@@ -209,6 +209,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <option value="2024">2024</option>
                                     <option value="2025">2025</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="plazo">Pago Hasta:</label>
+                                <select class="form-control" id="plazo_pago" name="plazo_pago">
+                                    <option value="1">PLAZOS DEL SISTEMA</option>
+                                    <option value="2">FECHA FIJA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha_limite">Fecha Limite de Pago:</label>
+                                <input type="text" name="fecha_limite" class="form-control has-feedback-left" id="single_cal1" value="<?php echo date('Y-m-d'); ?>" placeholder="" aria-describedby="inputSuccess2Status" readonly="">
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                <span id="inputSuccess2Status" class="sr-only">(success)</span>
                             </div>
                             <div class="form-group">
                             <fieldset>

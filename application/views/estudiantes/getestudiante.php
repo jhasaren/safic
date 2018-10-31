@@ -101,8 +101,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div class="x_title">
                                             <h2 style="color: green">Información del Estudiante</h2>
                                             <ul class="nav navbar-right panel_toolbox">
-                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                                </li>
+                                                <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                </li>-->
                                             </ul>
                                             <div class="clearfix"></div>
                                         </div>
@@ -295,7 +295,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <!-- /page content -->
         
-        <!--Modal - Agregar Estudiante-->
+        <!--Modal - Agregar Acudiente-->
         <div class="modal fade" id="myModal-acud" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-acud" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -345,7 +345,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <label for="contacto">Información de Contacto</label>
                                 <input type="text" class="form-control" onblur="this.value = this.value.toUpperCase()" id="dir_acu" name="dir_acu" placeholder="Direccion" required="">
                                 <input type="text" class="form-control" onblur="this.value = this.value.toUpperCase()" id="tel_acu" name="tel_acu" placeholder="Telefono" required="">
-                                <input type="text" class="form-control" id="mail_acu" name="mail_acu" placeholder="Email" required="">
+                                <input type="text" class="form-control" id="mail_acu" name="mail_acu" placeholder="Email" >
                             </div>
                         </div>
                         <div class="modal-footer">
