@@ -803,6 +803,35 @@ class MFacturacion extends CI_Model {
     }
     
     /**************************************************************************
+     * Nombre del Metodo: calendario_estudiante
+     * Descripcion: Recupera la informaciondel calendario actual del estudiante
+     * Autor: jhonalexander90@gmail.com
+     * Fecha Creacion: 02/11/2018, Ultima modificacion: 
+     **************************************************************************/
+    public function calendario_estudiante($idEstudiante) {
+                
+        /*Recupera el calendario del estudiante*/
+        $queryMaestro = $this->db->query("SELECT
+                                        e.idTipoCalendario,
+                                        t.descCalendario
+                                        FROM estudiante_carrera e
+                                        JOIN tipo_calendario t ON t.idTipoCalendario = e.idTipoCalendario
+                                        WHERE e.idEstudiante = ".$idEstudiante."
+                                        AND e.activo = 'S'");
+
+        if ($queryMaestro->num_rows() == 0) {
+
+            return false;
+
+        } else {
+
+            return $queryMaestro->row();
+
+        }
+
+    }
+    
+    /**************************************************************************
      * Nombre del Metodo: informacion_recibo_plazos
      * Descripcion: Recupera la informacion de plazos de un recibo
      * Autor: jhonalexander90@gmail.com

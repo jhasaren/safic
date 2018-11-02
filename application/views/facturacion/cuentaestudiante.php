@@ -151,7 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <center>
                                     <table border="0" style="border-collapse: collapse; width: 830px;" cellspacing="0" cellpadding="0"><colgroup><col style="width: 69pt;" width="92" /> <col span="4" style="width: 60pt;" width="80" /> <col style="width: 63pt;" width="84" /> <col span="3" style="width: 60pt;" width="80" /> <col style="width: 71pt;" width="94" /> </colgroup>
                                         <tbody>
-                                            <tr style="height: 15pt;">
+                                            <tr style="height: 15pt; color: #000">
                                                 <td colspan="7" rowspan="3" class="xl65" style="height: 45pt; width: 432pt; font-size: 20px" width="576" height="60">JARDIN MATERNO INFANTIL '<?php echo strtoupper($this->config->item('namebussines')); ?>'<br /> <B><?php echo strtoupper($this->config->item('idbussines')); ?></B></td>
                                                 <td colspan="3" rowspan="3" class="xl66" style="width: 191pt; text-align: center;" width="254"><span class="font6">Recibo de Pago</span><span class="font5"><br /> </span><span class="font7" style="font-size: 26px; font-weight: bold"><?php echo $data['dataGeneral']['maestro']->nroRecibo; ?></span></td>
                                             </tr>
@@ -164,11 +164,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <td colspan="4" rowspan="3" class="xl65" style="height: 45pt; width: 249pt;" width="332" height="60">
                                                     <B>ALUMNO:</B><br />
                                                     <?php echo $data['dataGeneral']['maestro']->nombre_estudiante; ?><br /> 
-                                                    <B>COD. ESTUDIANTE: </B><?php echo $data['dataGeneral']['maestro']->descTipoDocumento." ".$data['dataGeneral']['maestro']->idEstudiante; ?><br />
+                                                    <B>COD. ESTUDIANTE:</B><br /> 
+                                                    <span style="color: #0000FF; font-size: 16px; font-weight: bold"><?php echo $data['dataGeneral']['maestro']->descTipoDocumento." ".$data['dataGeneral']['maestro']->idEstudiante; ?></span><br />
                                                 </td>
                                                 <td colspan="3" rowspan="3" class="xl65" style="width: 183pt;" width="244">
                                                     <B>CURSO:</B> <?php echo $data['dataGeneral']['maestro']->descCurso; ?><br />
-                                                    <B>JORNADA:</B> <?php echo $data['dataGeneral']['maestro']->descJornada; ?>
+                                                    <B>JORNADA:</B> <?php echo $data['dataGeneral']['maestro']->descJornada; ?><br />
+                                                    <B>CALENDARIO:</B> <?php echo $data['dataGeneral']['calendarioEst']->descCalendario; ?>
                                                 </td>
                                                 <td colspan="3" rowspan="3" class="xl65" style="width: 191pt; text-align: right" width="254">
                                                     <B>Periodo Facturado:</B> <?php echo $data['dataGeneral']['maestro']->anoFacturado."".$data['dataGeneral']['maestro']->mesFacturado; ?><br />
@@ -181,7 +183,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <table border="0" style="border-collapse: collapse; width: 830px;" cellspacing="0" cellpadding="0"><colgroup><col style="width: 69pt;" width="92" /> <col span="4" style="width: 60pt;" width="80" /> <col style="width: 63pt;" width="84" /> <col span="3" style="width: 60pt;" width="80" /> <col style="width: 71pt;" width="94" /> </colgroup>
                                         <tbody>
                                             <tr style="height: 15pt;">
-                                                <td colspan="10" class="xl65" style="height: 15pt; width: 623pt; text-align: center;" width="830" height="20">Entidad Financiera BANCO AV VILLAS<br /><br /></td>
+                                                <td colspan="10" class="xl65" style="height: 15pt; width: 623pt; text-align: center; font-size: 18px; color: #000" width="830" height="20">BANCO AV VILLAS - Cuenta Corriente: <B>#229-00056-7</B><br /><br /></td>
                                             </tr>
                                             <tr style="height: 15pt; border-top-width: 0.5px; border-top: solid; border-color: #999999;">
                                                 <td class="xl66" style="height: 15pt; text-align: left; font-weight: bold" height="20">CID</td>
@@ -231,18 +233,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         realizar el pago dentro de las fechas establecidas.
                                                     </p>
                                                 </td>
-                                                <td colspan="3" class="xl66" style="width: 180pt; text-align: center; font-size: 20px" width="240">Fechas de Pago</td>
+                                                <td colspan="3" class="xl66" style="width: 180pt; text-align: center; font-size: 20px; color: #002166; font-weight: bold" width="240">Fechas de Pago</td>
                                                 <td class="xl67" style="width: 71pt; text-align: left; font-size: 20px" width="94"></td>
                                             </tr>
                                             <?php
                                             if ($data['dataGeneral']['plazos'] != FALSE){
+                                                $i = 0;
                                                 foreach ($data['dataGeneral']['plazos'] as $row_plazos){
+                                                    switch ($i) {
+                                                        case 0:
+                                                            $color="#66cc00";
+                                                            break;
+                                                        case 1:
+                                                            $color= "#ff6600";
+                                                            break;
+                                                        case 2:
+                                                            $color="#e2bc25";
+                                                            break;
+                                                        case 3:
+                                                            $color="#ff0000";
+                                                            break;
+                                                    }
                                                     ?>
-                                                    <tr style="height: 15.75pt;">
+                                                    <tr style="height: 15.75pt; color: <?php echo $color; ?>">
                                                         <td colspan="3" class="xl66" style="height: 15.75pt; width: 180pt; text-align: center; font-size: 20px" width="240" height="21">Pagar Hasta: <?php echo $row_plazos['fecha_plazo']; ?></td>
                                                         <td class="xl67" style="width: 71pt; text-align: left; font-size: 20px" width="94">$<?php echo number_format($totalPagar+($row_plazos['valorCobro']),0,',','.'); ?></td>
                                                     </tr>
                                                     <?php
+                                                    $i++;
                                                 }
                                             }
                                             ?>

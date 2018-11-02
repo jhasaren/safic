@@ -605,6 +605,10 @@ class CFacturacion extends CI_Controller {
                 $dataResolucion = $this->MFacturacion->informacion_resolucion(); 
                 $infoFactura['resolucion'] = $dataResolucion;
                 
+                /*Consulta Modelo para obtener informacion del calendario del estudiante*/
+                $dataCalendario = $this->MFacturacion->calendario_estudiante($id_estudiante); 
+                $infoFactura['calendarioEst'] = $dataCalendario;
+                
                 $info['dataGeneral'] = $infoFactura;
                 $this->session->set_tempdata('vistarecibo', 1, 7);
                 $this->estadocuenta($id_estudiante,$info);
