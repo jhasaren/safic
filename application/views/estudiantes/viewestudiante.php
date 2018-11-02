@@ -146,6 +146,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <label for="jornada">Jornada</label>
                                             <input type="text" class="form-control" onblur="this.value = this.value.toUpperCase()" id="jornada" name="jornada" placeholder="jornada" value="<?php echo $dataEstudiante->descJornada; ?>" readonly="">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="calendario">Calendario</label>
+                                            <input type="text" class="form-control" onblur="this.value = this.value.toUpperCase()" id="jornada" name="calendario" placeholder="calendario" value="<?php echo $dataEstudiante->descCalendario; ?>" readonly="">
+                                        </div>
                                         <div class="">
                                             <?php
                                             if ($dataEstudiante->activo == 'S') {

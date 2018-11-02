@@ -73,6 +73,8 @@ class CEstudiante extends CI_Controller {
                 $listRequisitos = $this->MEstudiante->list_documentos_requisito();
                 /*Consulta Modelo para obtener listado de Estudiantes registrados*/
                 $listEstudiantes = $this->MEstudiante->list_estudiantes(0); /*todos*/
+                /*Consulta Modelo para obtener listado de Calendarios registrados*/
+                $listCalendario = $this->MEstudiante->list_tipo_calendario();
                 
                 /*Retorna a la vista con los datos obtenidos*/
                 $info['list_documento'] = $listTipoDoc;
@@ -80,6 +82,7 @@ class CEstudiante extends CI_Controller {
                 $info['list_cursos'] = $listCursos;
                 $info['list_jornadas'] = $listJornadas;
                 $info['list_requisitos'] = $listRequisitos;
+                $info['list_calendario'] = $listCalendario;
                 $this->load->view('estudiantes/estudiantes',$info); 
             
             } else {
@@ -118,8 +121,8 @@ class CEstudiante extends CI_Controller {
                     /*Captura Variables Estudiante*/
                     $dataEstudiante['tipoDocEst'] = $this->input->post('tipo_doc');
                     $dataEstudiante['idEstudiante'] = $this->input->post('id_estudiante');
-                    $dataEstudiante['nombreEst'] = strtoupper($this->input->post('nombre_est'));
-                    $dataEstudiante['apellidoEst'] = strtoupper($this->input->post('apellido_est'));
+                    $dataEstudiante['nombreEst'] = $this->jasr->cleanstr(strtoupper($this->input->post('nombre_est')));
+                    $dataEstudiante['apellidoEst'] = $this->jasr->cleanstr(strtoupper($this->input->post('apellido_est')));
                     $date1 = new DateTime($this->input->post('fechanace')); 
                     $dataEstudiante['fechaNaceEst'] = $date1->format('Y-m-d'); 
                     $dataEstudiante['epsEst'] = strtoupper($this->input->post('eps_estudiante'));
@@ -128,12 +131,13 @@ class CEstudiante extends CI_Controller {
                     $dataEstudiante['fechaIngresoEst'] = $date2->format('Y-m-d'); 
                     $dataEstudiante['cursoEst'] = $this->input->post('curso');
                     $dataEstudiante['jornadaEst'] = $this->input->post('jornada');
+                    $dataEstudiante['calendario'] = $this->input->post('calendario');
                     
                     /*Captura Variables Acudiente*/
                     $dataAcudiente['tipoDocAcu'] = $this->input->post('tipo_doc_acu');
                     $dataAcudiente['idAcudiente'] = $this->input->post('id_acudiente');
-                    $dataAcudiente['nombreAcu'] = strtoupper($this->input->post('nombre_acu'));
-                    $dataAcudiente['apellidoAcu'] = strtoupper($this->input->post('apellido_acu'));
+                    $dataAcudiente['nombreAcu'] = $this->jasr->cleanstr(strtoupper($this->input->post('nombre_acu')));
+                    $dataAcudiente['apellidoAcu'] = $this->jasr->cleanstr(strtoupper($this->input->post('apellido_acu')));
                     $dataAcudiente['parentesco'] = $this->input->post('parentesco');
                     $dataAcudiente['direccionAcu'] = strtoupper($this->input->post('dir_acu'));
                     $dataAcudiente['telefonoAcu'] = $this->input->post('tel_acu');
@@ -147,44 +151,34 @@ class CEstudiante extends CI_Controller {
 
                                 if ($this->jasr->validaTipoString($dataAcudiente['idAcudiente'],5) && $this->jasr->validaTipoString($dataAcudiente['nombreAcu'],1) && $this->jasr->validaTipoString($dataAcudiente['apellidoAcu'],1)){
 
-                                    if ($this->jasr->validaTipoString($dataAcudiente['mailAcu'],6)){
+                                    /*Envia datos al modelo para el registro del estudiante y acudiente*/
+                                    $registerDataEst = $this->MEstudiante->registra_estudiante($dataEstudiante,$dataAcudiente);
 
-                                        /*Envia datos al modelo para el registro del estudiante y acudiente*/
-                                        $registerDataEst = $this->MEstudiante->registra_estudiante($dataEstudiante,$dataAcudiente);
+                                    if ($registerDataEst == TRUE){
 
-                                        if ($registerDataEst == TRUE){
-                                            
-                                            /*Consulta Modelo para obtener listado de Requisitos*/
-                                            $listRequisitos = $this->MEstudiante->list_documentos_requisito();
-                                            
-                                            foreach ($listRequisitos as $requisitoEst){
+                                        /*Consulta Modelo para obtener listado de Requisitos*/
+                                        $listRequisitos = $this->MEstudiante->list_documentos_requisito();
 
-                                                $cumpleRequisito = $this->input->post($requisitoEst['idDocumento']);
+                                        foreach ($listRequisitos as $requisitoEst){
 
-                                                if ($cumpleRequisito == 'on'){
+                                            $cumpleRequisito = $this->input->post($requisitoEst['idDocumento']);
 
-                                                    /*inserta requisito del estudiante*/
-                                                    $this->MEstudiante->ins_req_estudiante($requisitoEst['idDocumento'],$dataEstudiante['idEstudiante']);
+                                            if ($cumpleRequisito == 'on'){
 
-                                                } 
+                                                /*inserta requisito del estudiante*/
+                                                $this->MEstudiante->ins_req_estudiante($requisitoEst['idDocumento'],$dataEstudiante['idEstudiante']);
 
-                                            }
-                                            
-                                            $info['message'] = 'Estudiante Registrado Exitosamente';
-                                            $info['alert'] = 1;
-                                            $this->module($info);
-
-                                        } else {
-
-                                            $info['message'] = 'No fue posible registrar el estudiante';
-                                            $info['alert'] = 2;
-                                            $this->module($info);
+                                            } 
 
                                         }
 
+                                        $info['message'] = 'Estudiante Registrado Exitosamente';
+                                        $info['alert'] = 1;
+                                        $this->module($info);
+
                                     } else {
 
-                                        $info['message'] = 'No fue posible registrar el estudiante. Email del Acudiente inválido.';
+                                        $info['message'] = 'No fue posible registrar el estudiante';
                                         $info['alert'] = 2;
                                         $this->module($info);
 
@@ -260,8 +254,8 @@ class CEstudiante extends CI_Controller {
                     /*Captura Variables Estudiante*/
                     $dataEstudiante['tipoDocEst'] = $this->input->post('tipo_doc');
                     $dataEstudiante['idEstudiante'] = $this->input->post('id_estudiante');
-                    $dataEstudiante['nombreEst'] = strtoupper($this->input->post('nombre_est'));
-                    $dataEstudiante['apellidoEst'] = strtoupper($this->input->post('apellido_est'));
+                    $dataEstudiante['nombreEst'] = $this->jasr->cleanstr(strtoupper($this->input->post('nombre_est')));
+                    $dataEstudiante['apellidoEst'] = $this->jasr->cleanstr(strtoupper($this->input->post('apellido_est')));
                     $date1 = new DateTime($this->input->post('fechanace')); 
                     $dataEstudiante['fechaNaceEst'] = $date1->format('Y-m-d'); 
                     $dataEstudiante['epsEst'] = strtoupper($this->input->post('eps_estudiante'));
@@ -270,6 +264,7 @@ class CEstudiante extends CI_Controller {
                     $dataEstudiante['fechaIngresoEst'] = $date2->format('Y-m-d'); 
                     $dataEstudiante['cursoEst'] = $this->input->post('curso');
                     $dataEstudiante['jornadaEst'] = $this->input->post('jornada');
+                    $dataEstudiante['calendario'] = $this->input->post('calendario');
                     $tipoEstado = $this->input->post('estado');
                     if ($tipoEstado == 'on'){
                         $dataEstudiante['estadoEst'] = 'S';
@@ -472,6 +467,7 @@ class CEstudiante extends CI_Controller {
                     $listCursos = $this->MEstudiante->list_cursos(); /*Consulta Modelo para obtener listado Cursos*/
                     $listJornadas = $this->MEstudiante->list_jornadas(); /*Consulta Modelo para obtener listado Jornadas*/
                     $listRequisitos = $this->MEstudiante->list_documentos_requisito(); /*Consulta Modelo para obtener listado Documentos Requisito*/
+                    $listCalendario = $this->MEstudiante->list_tipo_calendario(); /*Consulta Modelo para obtener listado calendarios*/
                     
                     /*Consulta Modelo para obtener los acudientes del estudiante*/
                     $acudientesRegistro = $this->MEstudiante->list_acudientes($idEstudiante);
@@ -485,6 +481,7 @@ class CEstudiante extends CI_Controller {
                     $info['documentos_estudiante'] = $documentosEstudiante;
                     $info['dataEstudiante'] = $dataEstudiante;
                     $info['list_acudientes'] = $acudientesRegistro;
+                    $info['list_calendario'] = $listCalendario;
                     
                     if ($this->MRecurso->validaRecurso(6)){ 
                         /*permiso de editar*/
@@ -493,7 +490,6 @@ class CEstudiante extends CI_Controller {
                         /*permiso de ver*/
                         $this->load->view('estudiantes/viewestudiante',$info);
                     }
-                    
                                         
                 }
                 
@@ -527,28 +523,81 @@ class CEstudiante extends CI_Controller {
                 $idEstudiante = $this->input->post('id_estudiante');
                 $dataAcudiente['tipoDocAcu'] = $this->input->post('tipo_doc_acu');
                 $dataAcudiente['idAcudiente'] = $this->input->post('id_acudiente');
-                $dataAcudiente['nombreAcu'] = strtoupper($this->input->post('nombre_acu'));
-                $dataAcudiente['apellidoAcu'] = strtoupper($this->input->post('apellido_acu'));
+                $dataAcudiente['nombreAcu'] = $this->jasr->cleanstr(strtoupper($this->input->post('nombre_acu')));
+                $dataAcudiente['apellidoAcu'] = $this->jasr->cleanstr(strtoupper($this->input->post('apellido_acu')));
                 $dataAcudiente['parentesco'] = $this->input->post('parentesco');
                 $dataAcudiente['direccionAcu'] = strtoupper($this->input->post('dir_acu'));
                 $dataAcudiente['telefonoAcu'] = $this->input->post('tel_acu');
                 $dataAcudiente['mailAcu'] = $this->input->post('mail_acu');
                 
-                /*Consulta Modelo para registrar Acudiente*/
-                $insAcudiente = $this->MEstudiante->registra_acudiente($idEstudiante,$dataAcudiente);
+                if ($this->jasr->validaTipoString($dataAcudiente['nombreAcu'],1) && $this->jasr->validaTipoString($dataAcudiente['apellidoAcu'],1)){
                 
-                if ($insAcudiente == FALSE){
+                    /*Consulta Modelo para registrar Acudiente*/
+                    $insAcudiente = $this->MEstudiante->registra_acudiente($idEstudiante,$dataAcudiente);
+
+                    if ($insAcudiente == FALSE){
+
+                        $info['message'] = 'No fue posible registrar el acudiente en el sistema. Comuniquese con el administrador.';
+                        $info['alert'] = 2;
+                        $this->module($info);
+
+                    } else {
+
+                        $info['message'] = 'Se registro correctamente el Acudiente en el sistema.';
+                        $info['alert'] = 1;
+                        $this->module($info);
+
+                    }
+                
+                } else {
                     
-                    $info['message'] = 'No fue posible registrar el acudiente en el sistema. Comuniquese con el administrador.';
+                    $info['message'] = 'No fue posible registrar el acudiente en el sistema. El nombre/apellido no es valido.';
                     $info['alert'] = 2;
                     $this->module($info);
                     
+                }
+                
+            } else {
+                
+                show_404();
+                
+            }
+            
+        } else {
+            
+            $this->index();
+            
+        }
+        
+    }
+    
+    /**************************************************************************
+     * Nombre del Metodo: supracudiente
+     * Descripcion: Permite desasociar un acudiente del estudiante
+     * Autor: jhonalexander90@gmail.com
+     * Fecha Creacion: 01/11/2018, Ultima modificacion: 
+     **************************************************************************/
+    public function supracudiente($idAcudiente,$idEstudiante) {
+        
+        if ($this->session->userdata('validated')) {
+
+            if ($this->MRecurso->validaRecurso(17)){
+                
+                /*Consulta Modelo para desasociar el Acudiente*/
+                $suprAcudiente = $this->MEstudiante->suprime_acudiente_estudiante($idAcudiente,$idEstudiante);
+
+                if ($suprAcudiente == FALSE){
+
+                    $info['message'] = 'No fue posible desasociar el acudiente del estudiante. Comuniquese con el administrador.';
+                    $info['alert'] = 2;
+                    $this->module($info);
+
                 } else {
-                    
-                    $info['message'] = 'Se registro correctamente el Acudiente en el sistema.';
+
+                    $info['message'] = 'Se desasocio correctamente el Acudiente del Estudiante en el sistema.';
                     $info['alert'] = 1;
                     $this->module($info);
-                    
+
                 }
                 
             } else {

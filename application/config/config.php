@@ -546,3 +546,15 @@ $config['idbussines'] = "NIT 901.155.575-7";
 |
 */
 $config['empleados'] = 5;
+
+/*
+|--------------------------------------------------------------------------
+| Incremento Calendario A
+|--------------------------------------------------------------------------
+|
+| Indica el valor que se debe tener en cuenta en el proceso de liquidacion
+| para las tarifas fijas que tengan habilitado el incremento en calendario A
+| El valor se debe configurar en pesos CO.
+|
+*/
+$config['valorincrecal'] = 10000;

@@ -125,6 +125,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>Estudiante</th>
                                         <th>Curso</th>
                                         <th>Jornada</th>
+                                        <th>Calendario</th>
                                         <th>Activo</th>
                                         <th>Acción</th>
                                     </thead>
@@ -139,6 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <td class="center blue"><?php echo $row_list['nombres']." ".$row_list['apellidos']; ?></td>
                                                     <td class="center blue"><?php echo $row_list['descCurso']; ?></td>
                                                     <td class="center blue"><?php echo $row_list['descJornada']; ?></td>
+                                                    <td class="center blue"><?php echo $row_list['descCalendario']; ?></td>
                                                     <td class="center">
                                                         <?php if ($row_list['activo'] == 'S') { ?>
                                                         <span class="label label-success">Activo</span>
@@ -196,9 +198,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <td class="big blue"><?php echo $row_list_curso['descCurso']; ?></td>
                                                     <td class="small"><?php echo $row_list_curso['fechaRegistra']; ?></td>
                                                     <td class="center">
-                                                        <a href="#" >
+                                                        <!--<a href="#" >
                                                             <span class="label label-success">Editar</span>
-                                                        </a>
+                                                        </a>-->
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -240,9 +242,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <td class="big blue"><?php echo $row_list_jornada['descJornada']; ?></td>
                                                     <td class="small"><?php echo $row_list_jornada['fechaRegistra']; ?></td>
                                                     <td class="center">
-                                                        <a href="#" >
+                                                        <!--<a href="#" >
                                                             <span class="label label-success">Editar</span>
-                                                        </a>
+                                                        </a>-->
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -340,6 +342,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     ?>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="calendario">Calendario</label>
+                                <select class="form-control" name="calendario">
+                                   <?php
+                                    foreach ($list_calendario as $row_cal) {
+                                        ?>
+                                        <option value="<?php echo $row_cal['idTipoCalendario']; ?>"><?php echo $row_cal['descCalendario']; ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
                             <hr />
                             <h3>Datos del Acudiente</h3>
                             <div class="form-group">
@@ -376,7 +390,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <label for="contacto">Información de Contacto</label>
                                 <input type="text" class="form-control" onblur="this.value = this.value.toUpperCase()" id="dir_acu" name="dir_acu" placeholder="Direccion" required="">
                                 <input type="text" class="form-control" onblur="this.value = this.value.toUpperCase()" id="tel_acu" name="tel_acu" placeholder="Telefono" required="">
-                                <input type="text" class="form-control" id="mail_acu" name="mail_acu" placeholder="Email" required="">
+                                <input type="email" class="form-control" id="mail_acu" name="mail_acu" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                             </div>
                             <hr />
                             <h3>Documentación del Estudiante</h3>

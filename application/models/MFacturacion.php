@@ -32,7 +32,8 @@ class MFacturacion extends CI_Model {
                                     descTarifa,
                                     fija,
                                     activo,
-                                    valorTipoTarifa
+                                    valorTipoTarifa,
+                                    incrementoCalendario
                                     FROM tipo_tarifa
                                     ORDER BY 2");
 
@@ -95,7 +96,8 @@ class MFacturacion extends CI_Model {
         /*Recupera los tipos de doc creados*/
         $query = $this->db->query("SELECT
                                     idTarifa,
-                                    descTarifa
+                                    descTarifa,
+                                    incrementoCalendario
                                     FROM tipo_tarifa
                                     WHERE activo = 'S'
                                     AND fija = 'S'
@@ -149,10 +151,12 @@ class MFacturacion extends CI_Model {
      * Autor: jhonalexander90@gmail.com
      * Fecha Creacion: 23/10/2018, Ultima modificacion: 
      **************************************************************************/
-    public function registra_tipo_tarifa($tarifaFija,$descTarifa,$valorTipoTarifa) {
+    public function registra_tipo_tarifa($tarifaFija,$descTarifa,$valorTipoTarifa,$incremCalendarioA) {
         
         if ($tarifaFija == 'S'){
             $valorTipoTarifa = -1;
+        } else {
+            $incremCalendarioA = 'N';
         }
         
         $this->db->trans_start();
@@ -163,7 +167,8 @@ class MFacturacion extends CI_Model {
                                 valorTipoTarifa,
                                 activo, 
                                 fechaRegistro, 
-                                idUsuarioRegistra
+                                idUsuarioRegistra,
+                                incrementoCalendario
                                 )
                                 VALUES (
                                 '".$descTarifa."',
@@ -171,7 +176,8 @@ class MFacturacion extends CI_Model {
                                 ".$valorTipoTarifa.",
                                 'S',
                                 NOW(),
-                                ".$this->session->userdata('userid')."
+                                ".$this->session->userdata('userid').",
+                                '".$incremCalendarioA."'
                                 )");
         $this->db->trans_complete();
         $this->db->trans_off();
@@ -461,7 +467,8 @@ class MFacturacion extends CI_Model {
                                 t.valorTipoTarifa,
                                 t.activo,
                                 t.fechaRegistro,
-                                t.idUsuarioRegistra
+                                t.idUsuarioRegistra,
+                                t.incrementoCalendario
                                 FROM tipo_tarifa t
                                 WHERE idTarifa = ".$idTarifa."");
 
@@ -483,7 +490,7 @@ class MFacturacion extends CI_Model {
      * Autor: jhonalexander90@gmail.com
      * Fecha Creacion: 24/10/2018, Ultima modificacion: 
      **************************************************************************/
-    public function actualiza_tarifa($idTarifa,$nombreTarifa,$valorTarifa,$estadoTarifa) {
+    public function actualiza_tarifa($idTarifa,$nombreTarifa,$valorTarifa,$estadoTarifa,$incrCalendarioA) {
         
         if ($estadoTarifa == 'on'){
             $activo = 'S';
@@ -491,11 +498,18 @@ class MFacturacion extends CI_Model {
             $activo = 'N';
         }
         
+        if ($incrCalendarioA == 'on'){
+            $incremento = 'S';
+        } else {
+            $incremento = 'N';
+        }
+        
         $this->db->trans_start();
         $this->db->query("UPDATE tipo_tarifa SET 
                         descTarifa = '".$nombreTarifa."',
                         valorTipoTarifa = ".$valorTarifa.",
-                        activo = '".$activo."'
+                        activo = '".$activo."',
+                        incrementoCalendario = '".$incremento."'
                         WHERE
                         idTarifa = ".$idTarifa."");
         $this->db->trans_complete();

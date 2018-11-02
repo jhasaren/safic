@@ -139,8 +139,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             }
                                             ?>
                                             <label>
-                                                Activo
                                                 <input type="checkbox" class="flat" name="estado_tarifa" <?php echo $check; ?> >
+                                                Activo
+                                            </label>
+                                        </div>
+                                        <div class="">
+                                            <?php
+                                            if ($data_tarifa->incrementoCalendario == 'S') {
+                                                $check2 = 'checked';
+                                            } else {
+                                                $check2 = '';
+                                            }
+                                            
+                                            if ($data_tarifa->fija == 'N'){
+                                                $disabled = 'disabled';
+                                            } else {
+                                                $disabled = '';
+                                            }
+                                            ?>
+                                            <label>
+                                                <input type="checkbox" class="flat" name="incrementoCalendarioA" <?php echo $check2; ?> <?php echo $disabled; ?> >
+                                                Incremento Calendario A
                                             </label>
                                         </div>
                                         <br />                                        

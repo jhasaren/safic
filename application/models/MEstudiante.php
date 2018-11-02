@@ -39,12 +39,15 @@ class MEstudiante extends CI_Model {
                     cl.descCurso,
                     c.idJornada,
                     jo.descJornada,
+                    c.idTipoCalendario,
+                    tc.descCalendario,
                     e.activo
                     FROM estudiante_maestro e
                     JOIN tipo_documento t ON t.idTipoDocumento = e.idTipoDocumento
                     LEFT JOIN estudiante_carrera c ON c.idEstudiante = e.idEstudiante AND c.activo = 'S'
                     LEFT JOIN curso cl ON cl.idCurso = c.idCurso
                     LEFT JOIN jornada jo ON jo.idJornada = c.idJornada
+                    LEFT JOIN tipo_calendario tc ON tc.idTipoCalendario = c.idTipoCalendario
                     WHERE e.idSede = ".$this->session->userdata('sede')."";
             
         } else {
@@ -59,12 +62,15 @@ class MEstudiante extends CI_Model {
                     cl.descCurso,
                     c.idJornada,
                     jo.descJornada,
+                    c.idTipoCalendario,
+                    tc.descCalendario,
                     e.activo
                     FROM estudiante_maestro e
                     JOIN tipo_documento t ON t.idTipoDocumento = e.idTipoDocumento
                     LEFT JOIN estudiante_carrera c ON c.idEstudiante = e.idEstudiante AND c.activo = 'S'
                     LEFT JOIN curso cl ON cl.idCurso = c.idCurso
                     LEFT JOIN jornada jo ON jo.idJornada = c.idJornada
+                    LEFT JOIN tipo_calendario tc ON tc.idTipoCalendario = c.idTipoCalendario
                     WHERE e.idSede = ".$this->session->userdata('sede')."
                     AND e.activo = 'S'
                     ORDER BY e.nombres";
@@ -282,7 +288,8 @@ class MEstudiante extends CI_Model {
                                     idJornada, 
                                     activo,
                                     idSede,
-                                    idUsuarioRegistra
+                                    idUsuarioRegistra,
+                                    idTipoCalendario
                                     ) VALUES (
                                     ".$dataEstudiante['idEstudiante'].",
                                     NOW(),
@@ -290,7 +297,8 @@ class MEstudiante extends CI_Model {
                                     ".$dataEstudiante['jornadaEst'].",
                                     'S',
                                     ".$this->session->userdata('sede').",
-                                    ".$this->session->userdata('userid')."
+                                    ".$this->session->userdata('userid').",
+                                    ".$dataEstudiante['calendario']."
                                     )");
         
         $query4 = $this->db->query("INSERT INTO
@@ -341,7 +349,7 @@ class MEstudiante extends CI_Model {
                                     WHERE
                                     idEstudiante = ".$dataEstudiante['idEstudiante']."");
         
-        /*Verifica si ya existe la relacion entre estudiante y curso/jornada - carrera*/
+        /*Verifica si ya existe la relacion entre estudiante y curso/jornada/calendario - carrera*/
         $queryValida = $this->db->query("SELECT
                                         e.idEstudiante,
                                         e.idCurso,
@@ -351,6 +359,7 @@ class MEstudiante extends CI_Model {
                                         e.idEstudiante = ".$dataEstudiante['idEstudiante']."
                                         AND e.idCurso = ".$dataEstudiante['cursoEst']."
                                         AND e.idJornada = ".$dataEstudiante['jornadaEst']."
+                                        AND e.idTipoCalendario = ".$dataEstudiante['calendario']."
                                         AND e.activo = 'S'");
         
         if ($queryValida->num_rows() == 0) {
@@ -369,7 +378,8 @@ class MEstudiante extends CI_Model {
                             idJornada, 
                             activo, 
                             idSede, 
-                            idUsuarioRegistra
+                            idUsuarioRegistra,
+                            idTipoCalendario
                             ) VALUES (
                             ".$dataEstudiante['idEstudiante'].",
                             NOW(),
@@ -377,7 +387,8 @@ class MEstudiante extends CI_Model {
                             ".$dataEstudiante['jornadaEst'].",
                             'S',
                             ".$this->session->userdata('sede').",
-                            ".$this->session->userdata('userid')."
+                            ".$this->session->userdata('userid').",
+                            ".$dataEstudiante['calendario']."
                             )");
 
         }  
@@ -717,13 +728,16 @@ class MEstudiante extends CI_Model {
                                 s.idCurso,
                                 c.descCurso,
                                 s.idJornada,
-                                j.descJornada
+                                j.descJornada,
+                                s.idTipoCalendario,
+                                p.descCalendario
                                 FROM
                                 estudiante_maestro e
                                 JOIN tipo_documento t ON t.idTipoDocumento = e.idTipoDocumento
                                 LEFT JOIN estudiante_carrera s ON s.idEstudiante = e.idEstudiante AND s.activo = 'S'
                                 LEFT JOIN curso c ON c.idCurso = s.idCurso
                                 LEFT JOIN jornada j ON j.idJornada = s.idJornada
+                                LEFT JOIN tipo_calendario p ON p.idTipoCalendario = s.idTipoCalendario
                                 WHERE e.idEstudiante = ".$idEstudiante."");
 
         if ($query->num_rows() == 0) {
@@ -800,6 +814,60 @@ class MEstudiante extends CI_Model {
 
         }
 
+    }
+    
+    /**************************************************************************
+     * Nombre del Metodo: list_tipo_calendario
+     * Descripcion: Obtiene los tipos de calendario
+     * Autor: jhonalexander90@gmail.com
+     * Fecha Creacion: 01/11/2018, Ultima modificacion: 
+     **************************************************************************/
+    public function list_tipo_calendario() {
+                
+        /*Recupera los tipos de calendario creados*/
+        $query = $this->db->query("SELECT
+                                t.idTipoCalendario,
+                                t.descCalendario
+                                FROM tipo_calendario t
+                                WHERE activo = 'S'");
+
+        if ($query->num_rows() == 0) {
+
+            return false;
+
+        } else {
+
+            return $query->result_array();
+
+        }
+
+    }
+    
+    /**************************************************************************
+     * Nombre del Metodo: suprime_acudiente_estudiante
+     * Descripcion: desasocia el acudiente del estudiante
+     * Autor: jhonalexander90@gmail.com
+     * Fecha Creacion: 01/11/2018, Ultima modificacion: 
+     **************************************************************************/
+    public function suprime_acudiente_estudiante($idAcudiente,$idEstudiante) {
+        
+        $this->db->trans_start();        
+        $this->db->query("DELETE FROM estudiante_acudiente
+                        WHERE idEstudiante = ".$idEstudiante."
+                        AND idAcudiente = ".$idAcudiente."");
+        $this->db->trans_complete();
+        $this->db->trans_off();
+
+        if ($this->db->trans_status() === FALSE){
+
+            return false;
+
+        } else {
+
+            return true;
+
+        }
+        
     }
     
     

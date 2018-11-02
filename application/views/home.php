@@ -152,6 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                                                     </button>
                                                     Las tarifas fijas son del tipo compuesta ya que dependen del curso y jornada del estudiante. Ej. Matricula, Pension, Libros, Etc.
+                                                    Recuerde que si crea un nuevo curso o jornada debera hacer la parametrizacion de las tarifas fijas para dicho item creado.
                                                 </div>
                                                 
                                                 <div class="alert alert-warning alert-dismissible fade in" role="alert">

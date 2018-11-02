@@ -147,9 +147,10 @@ class CFacturacion extends CI_Controller {
                 $tarifaFija = strtoupper($this->input->post('tipo_tarifa'));
                 $descTarifa = strtoupper($this->input->post('nombre_tarifa'));
                 $valorTipoTarifa = $this->input->post('valor_tarifa');
+                $incremCalendarioA = $this->input->post('increm_calendarioA');
                 
                 /*Consulta Modelo para registrar tipo Tarifa*/
-                $insTarifa = $this->MFacturacion->registra_tipo_tarifa($tarifaFija,$descTarifa,$valorTipoTarifa);
+                $insTarifa = $this->MFacturacion->registra_tipo_tarifa($tarifaFija,$descTarifa,$valorTipoTarifa,$incremCalendarioA);
                 if ($insTarifa == FALSE){
                     
                     $this->session->set_tempdata('messageError', 'No fue posible registrar la tarifa en el sistema. Comuniquese con el administrador.', 7);
@@ -455,11 +456,12 @@ class CFacturacion extends CI_Controller {
                 $nombreTarifa = strtoupper($this->input->post('nombre_tarifa'));
                 $valorTarifa = $this->input->post('val_tarifa');
                 $estadoTarifa = $this->input->post('estado_tarifa');
+                $incrCalendarioA = $this->input->post('incrementoCalendarioA');
                 
                 if ($valorTarifa > 0 || $valorTarifa == '-1'){
-                
+                                    
                     /*Consulta Modelo para actualizar informacion de Tipo Tarifa*/
-                    $updTarifa = $this->MFacturacion->actualiza_tarifa($idTarifa,$nombreTarifa,$valorTarifa,$estadoTarifa);
+                    $updTarifa = $this->MFacturacion->actualiza_tarifa($idTarifa,$nombreTarifa,$valorTarifa,$estadoTarifa,$incrCalendarioA);
                     if ($updTarifa == FALSE){
 
                         $this->session->set_tempdata('messageError', 'No fue posible actualizar la tarifa en el sistema. Comuniquese con el administrador.', 7);
@@ -641,6 +643,8 @@ class CFacturacion extends CI_Controller {
                 $anoFactura = $this->input->post('ano_factura');
                 $liqAdicionales = $this->input->post('adicionales');
                 $tipoPlazo = $this->input->post('plazo_pago');
+                $calendarioEstudiante = $this->input->post('idcal_liq');
+                $valorIncreCal = $this->config->item('valorincrecal'); /*valor de incremento por calendario parametrizado*/
                 
                 /*Consulta Modelo para obtener listado tarifas fijas*/
                 $listTarFijas = $this->MFacturacion->list_tarifa_fija();
@@ -701,9 +705,26 @@ class CFacturacion extends CI_Controller {
                                     $insFactura = $this->MFacturacion->registra_factura($idEstudianteLiq,$idCursoLiq,$idJornadaLiq,1);
                                     
                                     if ($insFactura != FALSE){
+                                        
+                                        /*-----------------------------------------------------------------------------------*/
+                                        /*Validacion si esta activo el incremento del calendario para la tarifa fija*/
+                                        if ($tarfija['incrementoCalendario'] == 'S'){
                                             
+                                            /*valida si el calendario del estudiante es A*/
+                                            if ($calendarioEstudiante == 'A'){
+                                                /*suma el valor del incremento para la tarifa*/
+                                                $valorTarifaFinal = ($dataTarifaFija->valorTarifa) + $valorIncreCal;
+                                            } else {
+                                                $valorTarifaFinal = $dataTarifaFija->valorTarifa;
+                                            }
+                                            
+                                        } else {
+                                            $valorTarifaFinal = $dataTarifaFija->valorTarifa;
+                                        }
+                                        /*-----------------------------------------------------------------------------------*/
+                                        
                                         /*Consulta Modelo para registrar detalle de factura*/
-                                        $this->MFacturacion->registra_factura_detalle($insFactura,$tarfija['idTarifa'],$dataTarifaFija->descTarifa,$dataTarifaFija->valorTarifa,1);
+                                        $this->MFacturacion->registra_factura_detalle($insFactura,$tarfija['idTarifa'],$dataTarifaFija->descTarifa,$valorTarifaFinal,1);
                                                                                     
                                     } else {
                                         

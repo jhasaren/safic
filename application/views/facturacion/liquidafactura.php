@@ -118,6 +118,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>Estudiante</th>
                                         <th>Curso</th>
                                         <th>Jornada</th>
+                                        <th>Calendario</th>
                                         <th>Ultima Factura</th>
                                         <th>Activo</th>
                                         <th>Acción</th>
@@ -132,10 +133,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <td class="center blue"><?php echo $row_list['nombres']." ".$row_list['apellidos']; ?></td>
                                                     <td class="center blue"><?php echo $row_list['descCurso']; ?></td>
                                                     <td class="center blue"><?php echo $row_list['descJornada']; ?></td>
+                                                    <td class="center blue"><?php echo $row_list['descCalendario']; ?></td>
                                                     <td class="center green">-</td>
                                                     <td class="center">
                                                         <?php if ($this->MRecurso->validaRecurso(12)){ /*Liquidar*/ ?>
-                                                        <a class="btn btn-info btn-sm btn-liqfac" href="#" data-rel="<?php echo $row_list['idEstudiante']; ?>" data-rel2="<?php echo $row_list['idCurso']; ?>" data-rel3="<?php echo $row_list['idJornada']; ?>" >
+                                                        <a class="btn btn-info btn-sm btn-liqfac" href="#" data-rel="<?php echo $row_list['idEstudiante']; ?>" data-rel2="<?php echo $row_list['idCurso']; ?>" data-rel3="<?php echo $row_list['idJornada']; ?>" data-rel4="<?php echo $row_list['descCalendario']; ?>" >
                                                             <i class="glyphicon glyphicon-eye-open"></i>
                                                             Liquidar
                                                         </a>
@@ -177,8 +179,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="form-group">
                                 <label for="codigo_estudiante">Código Estudiante:</label>
                                 <input type="text" class="form-control" id="idest_liq" name="idest_liq" required="" readonly="" >
-                                <input type="hidden" class="form-control" id="idcur_liq" name="idcur_liq" required="" >
-                                <input type="hidden" class="form-control" id="idjor_liq" name="idjor_liq" required="" >
+                                <input type="hidden" class="form-control" id="idcur_liq" name="idcur_liq" >
+                                <input type="hidden" class="form-control" id="idjor_liq" name="idjor_liq" >
+                                <input type="hidden" class="form-control" id="idcal_liq" name="idcal_liq" >
                                 <br />
                                 <?php 
                                 $fecha = strtotime('+1 month', strtotime(date('Y-m-d')));

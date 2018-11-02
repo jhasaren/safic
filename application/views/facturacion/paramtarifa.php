@@ -121,7 +121,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th>Jornada</th>
                                     <th>Valor$</th>
                                     <th>Estado</th>
-                                    <th>Acción</th>
+                                    <!--<th>Acción</th>-->
                                 </thead>
                                 <tbody>
                                     <?php
@@ -141,11 +141,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <span class="label label-danger">Inactivo</span>
                                                     <?php }?>
                                                 </td>
-                                                <td class="center">
+                                                <!--<td class="center">
                                                     <a href="#" >
                                                         <span class="label label-info">Editar</span>
                                                     </a>
-                                                </td>
+                                                </td>-->
                                             </tr>
                                             <?php
                                         }
@@ -178,6 +178,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>Fija</th>
                                         <th>Valor $</th>
                                         <th>Activo</th>
+                                        <th>+CalendarioA</th>
                                         <th>Accion</th>
                                     </thead>
                                     <tbody>
@@ -195,6 +196,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <td class="small">$<?php echo number_format($row_list_tar['valorTipoTarifa'],0,',','.'); ?></td>
                                                     <?php } ?>
                                                     <td class="small"><?php echo $row_list_tar['activo']; ?></td>
+                                                    <td class="small"><?php echo $row_list_tar['incrementoCalendario']; ?></td>
                                                     <td class="center">
                                                         <a href="<?php echo base_url().'index.php/CFacturacion/edittarifa/'.$row_list_tar['idTarifa']; ?>" >
                                                             <span class="label label-info">Editar</span>
@@ -240,6 +242,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="form-group">
                                 <label for="valor_tarifa">Valor Tarifa</label>
                                 <input type="number" class="form-control" id="valor_tarifa" name="valor_tarifa" placeholder="Valor en Pesos $" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="increm_calendario">Incrementa Calendario A (solo tarifas fijas)</label>
+                                <select class="form-control" id="increm_calendarioA" name="increm_calendarioA">
+                                   <option value="N">NO</option>
+                                   <option value="S">SI</option>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">

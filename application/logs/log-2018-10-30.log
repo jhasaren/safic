@@ -1030,3 +1030,101 @@ INFO - 2018-10-30 23:42:06 --> File loaded: G:\xampp\htdocs\safic\application\vi
 INFO - 2018-10-30 23:42:06 --> File loaded: G:\xampp\htdocs\safic\application\views\facturacion/panelfacturacion.php
 INFO - 2018-10-30 23:42:06 --> Final output sent to browser
 DEBUG - 2018-10-30 23:42:06 --> Total execution time: 0.0395
+INFO - 2018-10-30 23:43:41 --> Config Class Initialized
+INFO - 2018-10-30 23:43:41 --> Hooks Class Initialized
+DEBUG - 2018-10-30 23:43:41 --> UTF-8 Support Enabled
+INFO - 2018-10-30 23:43:41 --> Utf8 Class Initialized
+INFO - 2018-10-30 23:43:41 --> URI Class Initialized
+INFO - 2018-10-30 23:43:41 --> Router Class Initialized
+INFO - 2018-10-30 23:43:41 --> Output Class Initialized
+INFO - 2018-10-30 23:43:41 --> Security Class Initialized
+DEBUG - 2018-10-30 23:43:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2018-10-30 23:43:41 --> Input Class Initialized
+INFO - 2018-10-30 23:43:41 --> Language Class Initialized
+INFO - 2018-10-30 23:43:41 --> Loader Class Initialized
+INFO - 2018-10-30 23:43:41 --> Database Driver Class Initialized
+ERROR - 2018-10-30 23:43:51 --> Severity: Warning --> mysqli::real_connect(): (HY000/2002): Se produjo un error durante el intento de conexi�n ya que la parte conectada no respondi� adecuadamente tras un periodo de tiempo, o bien se produjo un error en la conexi�n establecida ya que el host conectado no ha podido responder.
+ G:\xampp\htdocs\safic\system\database\drivers\mysqli\mysqli_driver.php 201
+ERROR - 2018-10-30 23:43:51 --> Unable to connect to the database
+INFO - 2018-10-30 23:43:51 --> Language file loaded: language/english/db_lang.php
+INFO - 2018-10-30 23:43:51 --> Config Class Initialized
+INFO - 2018-10-30 23:43:51 --> Hooks Class Initialized
+DEBUG - 2018-10-30 23:43:51 --> UTF-8 Support Enabled
+INFO - 2018-10-30 23:43:51 --> Utf8 Class Initialized
+INFO - 2018-10-30 23:43:51 --> URI Class Initialized
+INFO - 2018-10-30 23:43:51 --> Router Class Initialized
+INFO - 2018-10-30 23:43:51 --> Output Class Initialized
+INFO - 2018-10-30 23:43:51 --> Security Class Initialized
+DEBUG - 2018-10-30 23:43:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2018-10-30 23:43:51 --> Input Class Initialized
+INFO - 2018-10-30 23:43:51 --> Language Class Initialized
+INFO - 2018-10-30 23:43:51 --> Loader Class Initialized
+INFO - 2018-10-30 23:43:51 --> Database Driver Class Initialized
+ERROR - 2018-10-30 23:43:51 --> Severity: Warning --> ini_set(): A session is active. You cannot change the session module's ini settings at this time G:\xampp\htdocs\safic\system\libraries\Session\Session.php 314
+INFO - 2018-10-30 23:43:51 --> Session: Class initialized using 'files' driver.
+INFO - 2018-10-30 23:43:51 --> Model "MRecurso" initialized
+INFO - 2018-10-30 23:43:51 --> Controller Class Initialized
+INFO - 2018-10-30 23:43:51 --> Helper loaded: url_helper
+DEBUG - 2018-10-30 23:43:51 --> Jasr class already loaded. Second attempt ignored.
+INFO - 2018-10-30 23:43:51 --> Model "MFacturacion" initialized
+DEBUG - 2018-10-30 23:43:51 --> Cache class already loaded. Second attempt ignored.
+INFO - 2018-10-30 23:43:51 --> Model "MEstudiante" initialized
+INFO - 2018-10-30 23:43:51 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/menu.php
+INFO - 2018-10-30 23:43:51 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/top.php
+INFO - 2018-10-30 23:43:51 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/footer-bar.php
+INFO - 2018-10-30 23:43:51 --> File loaded: G:\xampp\htdocs\safic\application\views\facturacion/panelfacturacion.php
+INFO - 2018-10-30 23:43:51 --> Final output sent to browser
+DEBUG - 2018-10-30 23:43:51 --> Total execution time: 0.0625
+INFO - 2018-10-30 23:43:57 --> Config Class Initialized
+INFO - 2018-10-30 23:43:57 --> Hooks Class Initialized
+DEBUG - 2018-10-30 23:43:57 --> UTF-8 Support Enabled
+INFO - 2018-10-30 23:43:57 --> Utf8 Class Initialized
+INFO - 2018-10-30 23:43:57 --> URI Class Initialized
+INFO - 2018-10-30 23:43:57 --> Router Class Initialized
+INFO - 2018-10-30 23:43:57 --> Output Class Initialized
+INFO - 2018-10-30 23:43:57 --> Security Class Initialized
+DEBUG - 2018-10-30 23:43:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2018-10-30 23:43:57 --> Input Class Initialized
+INFO - 2018-10-30 23:43:57 --> Language Class Initialized
+INFO - 2018-10-30 23:43:57 --> Loader Class Initialized
+INFO - 2018-10-30 23:43:57 --> Database Driver Class Initialized
+ERROR - 2018-10-30 23:43:57 --> Severity: Warning --> ini_set(): A session is active. You cannot change the session module's ini settings at this time G:\xampp\htdocs\safic\system\libraries\Session\Session.php 314
+INFO - 2018-10-30 23:43:57 --> Session: Class initialized using 'files' driver.
+INFO - 2018-10-30 23:43:57 --> Model "MRecurso" initialized
+INFO - 2018-10-30 23:43:57 --> Controller Class Initialized
+INFO - 2018-10-30 23:43:57 --> Helper loaded: url_helper
+DEBUG - 2018-10-30 23:43:57 --> Jasr class already loaded. Second attempt ignored.
+INFO - 2018-10-30 23:43:57 --> Model "MFacturacion" initialized
+DEBUG - 2018-10-30 23:43:57 --> Cache class already loaded. Second attempt ignored.
+INFO - 2018-10-30 23:43:57 --> Model "MEstudiante" initialized
+INFO - 2018-10-30 23:43:57 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/menu.php
+INFO - 2018-10-30 23:43:57 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/top.php
+INFO - 2018-10-30 23:43:57 --> File loaded: G:\xampp\htdocs\safic\application\views\includes/footer-bar.php
+INFO - 2018-10-30 23:43:57 --> File loaded: G:\xampp\htdocs\safic\application\views\facturacion/aplicarpago.php
+INFO - 2018-10-30 23:43:57 --> Final output sent to browser
+DEBUG - 2018-10-30 23:43:57 --> Total execution time: 0.0515
+INFO - 2018-10-30 23:44:10 --> Config Class Initialized
+INFO - 2018-10-30 23:44:10 --> Hooks Class Initialized
+DEBUG - 2018-10-30 23:44:10 --> UTF-8 Support Enabled
+INFO - 2018-10-30 23:44:10 --> Utf8 Class Initialized
+INFO - 2018-10-30 23:44:10 --> URI Class Initialized
+INFO - 2018-10-30 23:44:10 --> Router Class Initialized
+INFO - 2018-10-30 23:44:10 --> Output Class Initialized
+INFO - 2018-10-30 23:44:10 --> Security Class Initialized
+DEBUG - 2018-10-30 23:44:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2018-10-30 23:44:10 --> Input Class Initialized
+INFO - 2018-10-30 23:44:10 --> Language Class Initialized
+INFO - 2018-10-30 23:44:10 --> Loader Class Initialized
+INFO - 2018-10-30 23:44:10 --> Database Driver Class Initialized
+ERROR - 2018-10-30 23:44:10 --> Severity: Warning --> ini_set(): A session is active. You cannot change the session module's ini settings at this time G:\xampp\htdocs\safic\system\libraries\Session\Session.php 314
+INFO - 2018-10-30 23:44:10 --> Session: Class initialized using 'files' driver.
+INFO - 2018-10-30 23:44:10 --> Model "MRecurso" initialized
+INFO - 2018-10-30 23:44:10 --> Controller Class Initialized
+INFO - 2018-10-30 23:44:10 --> Helper loaded: url_helper
+DEBUG - 2018-10-30 23:44:10 --> Jasr class already loaded. Second attempt ignored.
+DEBUG - 2018-10-30 23:44:10 --> Cache class already loaded. Second attempt ignored.
+INFO - 2018-10-30 23:44:10 --> Model "MPrincipal" initialized
+DEBUG - 2018-10-30 23:44:10 --> Config file loaded: G:\xampp\htdocs\safic\application\config/memcached.php
+INFO - 2018-10-30 23:44:10 --> File loaded: G:\xampp\htdocs\safic\application\views\login.php
+INFO - 2018-10-30 23:44:10 --> Final output sent to browser
+DEBUG - 2018-10-30 23:44:10 --> Total execution time: 0.0450

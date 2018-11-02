@@ -193,9 +193,11 @@ $(document).ready(function () {
         if ($(this).val() == 'S') {
             $("#valor_tarifa").val("");
             $("#valor_tarifa").attr("readonly", "readonly");
+            $("#increm_calendarioA").removeAttr("disabled");
         } else {
             $("#valor_tarifa").val("");
             $("#valor_tarifa").removeAttr("readonly");
+            $("#increm_calendarioA").attr("disabled", "disabled");
         }
     }).trigger("change");
     
@@ -238,15 +240,6 @@ $(document).ready(function () {
     $('.btn-tarfija').click(function (e) {
         e.preventDefault();
         $('#myModal-tar').modal('show');
-    });
-    /*Modal - Liquidar Factura*/
-    $('.btn-saleitemdel').click(function (e) {
-        e.preventDefault();
-        var idReg = $(this).attr('data-rel');
-        var type = $(this).attr('data-rel2');
-        $("#idregdetalle").val(idReg);
-        $("#typereg").val(type);
-        $('#myModal-itemdel').modal('show');
     });
     /*Modal - Aplicar Pago*/
     $('.btn-aplpago').click(function (e) {
@@ -296,9 +289,11 @@ $(document).ready(function () {
         var idEst = $(this).attr('data-rel');
         var idCur = $(this).attr('data-rel2');
         var idJor = $(this).attr('data-rel3');
+        var idCal = $(this).attr('data-rel4');
         $("#idest_liq").val(idEst);
         $("#idcur_liq").val(idCur);
         $("#idjor_liq").val(idJor);
+        $("#idcal_liq").val(idCal);
         $('#myModal-liq').modal('show');
     });
     /*Deshabilitar tecla enter en formulario*/

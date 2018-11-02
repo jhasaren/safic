@@ -178,6 +178,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 ?>
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="calendario">Calendario</label>
+                                            <select class="form-control" name="calendario">
+                                               <?php
+                                                foreach ($list_calendario as $row_cal) {
+                                                    ?>
+                                                    <option value="<?php echo $row_cal['idTipoCalendario']; ?>" <?php if ($dataEstudiante->idTipoCalendario == $row_cal['idTipoCalendario']){ echo "selected"; } ?> ><?php echo $row_cal['descCalendario']; ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
                                         <div class="">
                                             <?php
                                             if ($dataEstudiante->activo == 'S') {
@@ -223,8 +235,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                     <td class="small"><?php echo "Dir: ".$row_list_acu['direccion']."<br />Tel: ".$row_list_acu['telefono']."<br />".$row_list_acu['email']; ?></td>
                                                                     <td class="big blue"><?php echo $row_list_acu['parentesco']; ?></td>
                                                                     <td class="center">
-                                                                        <a href="<?php echo base_url().'index.php/CPrincipal/dataedit/gastos/'.$row_list['idGasto']; ?>" >
+                                                                        <!--<a href="#" >
                                                                             <span class="label label-success">Editar</span>
+                                                                        </a>-->
+                                                                        <a href="<?php echo base_url().'index.php/CEstudiante/supracudiente/'.$row_list_acu['idAcudiente']."/".$dataEstudiante->idEstudiante; ?>" >
+                                                                            <span class="label label-warning">Quitar Acudiente</span>
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -345,7 +360,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <label for="contacto">Información de Contacto</label>
                                 <input type="text" class="form-control" onblur="this.value = this.value.toUpperCase()" id="dir_acu" name="dir_acu" placeholder="Direccion" required="">
                                 <input type="text" class="form-control" onblur="this.value = this.value.toUpperCase()" id="tel_acu" name="tel_acu" placeholder="Telefono" required="">
-                                <input type="text" class="form-control" id="mail_acu" name="mail_acu" placeholder="Email" >
+                                <input type="email" class="form-control" id="mail_acu" name="mail_acu" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                             </div>
                         </div>
                         <div class="modal-footer">
