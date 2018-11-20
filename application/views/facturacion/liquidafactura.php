@@ -80,85 +80,87 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <!--Alerta-->
-                        <?php if ($this->session->tempdata('message')){ ?>
-                        <div class="alert alert-info" id="success-alert">
-                            <button type="button" class="close" data-dismiss="alert">x</button>
-                            <strong>Hecho! </strong> <?php echo $this->session->tempdata('message'); ?>
-                        </div>
+                        <?php if ($this->session->tempdata('message')) { ?>
+                            <div class="alert alert-info" id="success-alert">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>Hecho! </strong> <?php echo $this->session->tempdata('message'); ?>
+                            </div>
                         <?php } ?>
-                        <?php if ($this->session->tempdata('messageError')){ ?>
-                        <div class="alert alert-warning" id="success-alert">
-                            <button type="button" class="close" data-dismiss="alert">x</button>
-                            <strong>Fallo! </strong> <?php echo $this->session->tempdata('messageError'); ?>
-                        </div>
+                        <?php if ($this->session->tempdata('messageError')) { ?>
+                            <div class="alert alert-warning" id="success-alert">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>Fallo! </strong> <?php echo $this->session->tempdata('messageError'); ?>
+                            </div>
                         <?php } ?>
-                        <?php if ($this->session->tempdata('messageArray')){ ?>
-                        <div class="alert alert-warning" id="success-alert">
-                            <button type="button" class="close" data-dismiss="alert">x</button>
-                            <strong>Algo salio mal, por favor informe al administrador.</strong>
-                        </div>
+                        <?php if ($this->session->tempdata('messageArray')) { ?>
+                            <div class="alert alert-warning" id="success-alert">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>Algo salio mal, por favor informe al administrador.</strong>
+                            </div>
                         <?php } ?>
                         <!--/Alerta-->
-                        
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <h2>Lista de Estudiantes</h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>-->
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-                                <table id="datatable-buttons" class="table table-striped table-bordered">
-                                    <thead>
-                                        <th>ID Estudiante</th>
-                                        <th>Estudiante</th>
-                                        <th>Curso</th>
-                                        <th>Jornada</th>
-                                        <th>Calendario</th>
-                                        <th>Ultima Factura</th>
-                                        <th>Activo</th>
-                                        <th>Acción</th>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        if ($list_estudiante != FALSE){
-                                            foreach ($list_estudiante as $row_list){
-                                                ?>
-                                                <tr style="background-color: #FFFFFF;">
-                                                    <td class="center blue"><?php echo $row_list['descTipoDocumento'].". ".$row_list['idEstudiante']; ?></td>
-                                                    <td class="center blue"><?php echo $row_list['nombres']." ".$row_list['apellidos']; ?></td>
-                                                    <td class="center blue"><?php echo $row_list['descCurso']; ?></td>
-                                                    <td class="center blue"><?php echo $row_list['descJornada']; ?></td>
-                                                    <td class="center blue"><?php echo $row_list['descCalendario']; ?></td>
-                                                    <td class="center green">-</td>
-                                                    <td class="center">
-                                                        <?php if ($this->MRecurso->validaRecurso(12)){ /*Liquidar*/ ?>
-                                                        <a class="btn btn-info btn-sm btn-liqfac" href="#" data-rel="<?php echo $row_list['idEstudiante']; ?>" data-rel2="<?php echo $row_list['idCurso']; ?>" data-rel3="<?php echo $row_list['idJornada']; ?>" data-rel4="<?php echo $row_list['descCalendario']; ?>" >
-                                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                                            Liquidar
-                                                        </a>
-                                                        <?php } ?>
-                                                    </td>
-                                                    <td class="center">
-                                                        <?php if ($this->MRecurso->validaRecurso(12)){ /*Estado de Cuenta*/ ?>
-                                                        <a class="btn btn-info btn-sm" href="<?php echo base_url().'index.php/CFacturacion/estadocuenta/'.$row_list['idEstudiante'].'/0'; ?>">
-                                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                                            Estado de Cuenta
-                                                        </a>
-                                                        <?php } ?>
-                                                    </td>
-                                                </tr>
-                                                <?php
-                                            }
+                    </div>
+                </div>
+                
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Lista de Estudiantes</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>-->
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <table id="datatable-buttons" class="table table-striped table-bordered">
+                                <thead>
+                                    <th>ID Estudiante</th>
+                                    <th>Estudiante</th>
+                                    <th>Curso</th>
+                                    <th>Jornada</th>
+                                    <th>Calendario</th>
+                                    <th>Ultima Factura</th>
+                                    <th>Activo</th>
+                                    <th>Acción</th>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if ($list_estudiante != FALSE){
+                                        foreach ($list_estudiante as $row_list){
+                                            ?>
+                                            <tr style="background-color: #FFFFFF;">
+                                                <td class="center blue"><?php echo $row_list['descTipoDocumento'].". ".$row_list['idEstudiante']; ?></td>
+                                                <td class="center blue"><?php echo $row_list['nombres']." ".$row_list['apellidos']; ?></td>
+                                                <td class="center blue"><?php echo $row_list['descCurso']; ?></td>
+                                                <td class="center blue"><?php echo $row_list['descJornada']; ?></td>
+                                                <td class="center blue"><?php echo $row_list['descCalendario']; ?></td>
+                                                <td class="center green">-</td>
+                                                <td class="center">
+                                                    <?php if ($this->MRecurso->validaRecurso(12)){ /*Liquidar*/ ?>
+                                                    <a class="btn btn-info btn-sm btn-liqfac" href="#" data-rel="<?php echo $row_list['idEstudiante']; ?>" data-rel2="<?php echo $row_list['idCurso']; ?>" data-rel3="<?php echo $row_list['idJornada']; ?>" data-rel4="<?php echo $row_list['descCalendario']; ?>" >
+                                                        <i class="glyphicon glyphicon-eye-open"></i>
+                                                        Liquidar
+                                                    </a>
+                                                    <?php } ?>
+                                                </td>
+                                                <td class="center">
+                                                    <?php if ($this->MRecurso->validaRecurso(12)){ /*Estado de Cuenta*/ ?>
+                                                    <a class="btn btn-info btn-sm" href="<?php echo base_url().'index.php/CFacturacion/estadocuenta/'.$row_list['idEstudiante'].'/0'; ?>">
+                                                        <i class="glyphicon glyphicon-eye-open"></i>
+                                                        Estado de Cuenta
+                                                    </a>
+                                                    <?php } ?>
+                                                </td>
+                                            </tr>
+                                            <?php
                                         }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
